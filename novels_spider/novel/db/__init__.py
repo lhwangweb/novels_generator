@@ -3,7 +3,7 @@ from mongoengine import *
 # Mongo 連線資訊
 MONGO_USER="test_user"
 MONGO_PASSWD="test_password"
-MONGO_HOST= "mongodb"
+MONGO_HOST= "your.mongodb.host"
 MONGO_DBNAME = "novels"
 
 def mongo_connection():

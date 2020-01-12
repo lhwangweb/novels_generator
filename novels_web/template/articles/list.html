@@ -4,8 +4,16 @@
     <title>文章列表</title>
 </head>
 <body>
-{% for article in articles  %}
-<a href="{{ article.link }}">{{ article.title }}</a><br />
-{% endfor %}
+	<h1>文章列表</h1>
+<div>
+	<ul>
+		{% for article in articles  %}
+		<li>
+		{{ forloop.counter }}. <a href="{{ article.link }}">{{ article.title|safe }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</div>>
+
 </body>
 </html>

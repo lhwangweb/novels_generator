@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'articles.app.ArticlesConfig'
 
 ]
 
@@ -87,7 +86,7 @@ WSGI_APPLICATION = 'novels_web.wsgi.application'
 # Mongo 連線資訊
 MONGO_USER="test_user"
 MONGO_PASSWD="test_password"
-MONGO_HOST= "mongodb"
+MONGO_HOST= "your.mongodb.host"
 MONGO_DBNAME = "novels"
 
 from mongoengine import connect

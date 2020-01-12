@@ -14,7 +14,7 @@ from keras.utils import np_utils
 # Mongo 連線資訊
 MONGO_USER="test_user"
 MONGO_PASSWD="test_password"
-MONGO_HOST= "mongodb"
+MONGO_HOST= "your.mongodb.host"
 MONGO_DBNAME = "novels"
 
 def read_article(aricles_num=5):
@@ -41,14 +41,14 @@ def read_article(aricles_num=5):
     text = ""
     for article in articles:
         content = article["content"]
-        # 清除不必要的內容
-        content = content.replace("UＵ看書", "").replace("ＵU看書", "").replace("UU看書", "").replace("ＵＵ看書", "").replace("章節缺失、錯誤舉報", "").replace("…", "")
-        content = content.replace("Ｕ", "U").replace("ｗ", "w").replace("ｕ", "u").replace("ｓ", "s").replace("．", ".").replace(".", ".").replace("ｋ", "k").replace("ａ", "a").replace("ｎ", "n").replace("ｈ", "h").replace("ｃ", "o").replace("ｏ", "o").replace("ｍ", "m")
-        content = content.replace("www.uukanshu.coｍ", "")
-        content = ht_inst.handle(content)
-        # content = re.sub(r'\s+', '', content, flags = re.MULTILINE)
         text += content
 
+    # 清除不必要的內容
+    text = text.replace("UＵ看書", "").replace("ＵU看書", "").replace("UU看書", "").replace("ＵＵ看書", "").replace("章節缺失、錯誤舉報", "").replace("…", "")
+    text = text.replace("Ｕ", "U").replace("ｗ", "w").replace("ｕ", "u").replace("ｓ", "s").replace("．", ".").replace(".", ".").replace("ｋ", "k").replace("ａ", "a").replace("ｎ", "n").replace("ｈ", "h").replace("ｃ", "o").replace("ｏ", "o").replace("ｍ", "m")
+    text = text.replace("www.uukanshu.com", "").replace("uukanshu", "")
+    text = ht_inst.handle(text)
+    # text = re.sub(r'\s+', '', text, flags = re.MULTILINE)
     return text
 
 
@@ -162,6 +162,7 @@ def keras_generate(lstm_model_data = None, raw_text="", sequence_length = 10, ar
         
         # 輸入文字 - 就是語料末尾的 sequence_length 個字 
         input_text = raw_text[(0-sequence_length):]
+        # input_text = re.sub(r'\s+', '', input_text, flags = re.MULTILINE)
 
         # 轉換為數字版 int_pattern
         int_pattern = [text_int_relation[value] for value in input_text]
@@ -228,13 +229,17 @@ def main(num_articles = 5, epochs = 1, sequence_length = 10, batch_size = 32):
 if __name__ == '__main__':
     try:
         # 用於預測新字的句子長度
-        sequence_length = 64
+        sequence_length = 6
+        
         # 每批訓練的樣本數 batch_size大小選擇: https://www.zhihu.com/question/32673260
-        batch_size = 1
+        batch_size = 4
+        
         # 要用幾篇文章訓練
-        num_articles = 100
+        num_articles = 1
+        
         # 訓練次數
-        epochs = 1000
+        epochs = 100
+
         # 執行主程式
         main(num_articles=num_articles, epochs=epochs, sequence_length=sequence_length, batch_size=batch_size)
     
