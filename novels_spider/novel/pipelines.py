@@ -10,4 +10,3 @@ class ArticlePipeline(object):
     def process_item(self, item, spider):
         from novel.repositary.UU import ArticleRepositary
         return ArticleRepositary.insertArticle(item)
-

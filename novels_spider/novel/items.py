@@ -7,12 +7,14 @@
 
 import scrapy
 
+
 class LinkItem(scrapy.Item):
     site = scrapy.Field()
     novel_id = scrapy.Field()
     title = scrapy.Field()
     link = scrapy.Field()
-    
+
+
 class ArticleItem(scrapy.Item):
     """
     單篇文章 Model
@@ -25,5 +27,5 @@ class ArticleItem(scrapy.Item):
     link = scrapy.Field()
     title = scrapy.Field()
     content = scrapy.Field()
-    created_at =  scrapy.Field()
-    updated_at =  scrapy.Field()
+    created_at = scrapy.Field()
+    updated_at = scrapy.Field()

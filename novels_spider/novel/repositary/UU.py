@@ -1,12 +1,13 @@
 import scrapy
 
+
 class LinkRepositary:
     name = "UU"
 
     def __init__(self):
         # self.name = "UU"
         pass
-    
+
     @classmethod
     def getNewLinks(self, raw_links):
         """
@@ -41,21 +42,23 @@ class LinkRepositary:
                         # 沒有資料會噴 Exception
                         existedLink = None
                     if not existedLink:
-                        newLink = LinksOnMongo(site=site, novel_id=novel_id, title=title, link=link)
+                        newLink = LinksOnMongo(
+                            site=site, novel_id=novel_id, title=title, link=link)
                         newLink.save()
                         datas.append({
-                            'title':title,
-                            'link':link
+                            'title': title,
+                            'link': link
                         })
 
         return datas
 
+
 class ArticleRepositary:
-    
+
     name = "UU"
-    
+
     def __init__(self):
-        pass 
+        pass
 
     def insertArticle(articleItem):
         from novel.db.mongo import Articles as ArticlesOnMongo
@@ -63,15 +66,15 @@ class ArticleRepositary:
 
         # Insert 整個 Scrapy Item 到 Mongo
         newArticle = ArticlesOnMongo(
-            site = articleItem["site"],
-            novel = articleItem["novel"],
-            novel_id = articleItem["novel_id"],
-            article_id = articleItem["article_id"],
-            author = articleItem["author"],
-            link = articleItem["link"],
-            title = articleItem["title"],
-            content = articleItem["content"],
-            created_at =  articleItem["created_at"],
-            updated_at =  articleItem["updated_at"],
+            site=articleItem["site"],
+            novel=articleItem["novel"],
+            novel_id=articleItem["novel_id"],
+            article_id=articleItem["article_id"],
+            author=articleItem["author"],
+            link=articleItem["link"],
+            title=articleItem["title"],
+            content=articleItem["content"],
+            created_at=articleItem["created_at"],
+            updated_at=articleItem["updated_at"],
         )
         newArticle.save()

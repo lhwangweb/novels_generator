@@ -4,6 +4,21 @@ from django.db import models
 from mongoengine import *
 import datetime
 
+# Mongo 連線資訊
+MONGO_USER = "test_user"
+MONGO_PASSWD = "test_password"
+MONGO_HOST = "your.mongodb.hosr"
+MONGO_DBNAME = "novels"
+
+conn = connect(
+    alias='default',
+    db=MONGO_DBNAME,
+    host=MONGO_HOST,
+    username=MONGO_USER,
+    password=MONGO_PASSWD,
+    port=27017
+)
+
 class ArticleMongoModel(Document):
     class Meta:
         app_lable = 'mongo'
@@ -21,4 +36,7 @@ class ArticleMongoModel(Document):
     # updated_at = DateTimeField()
 
     def link(self):
+        """
+        生產 link
+        """
         return "/detail/" + str(self._id)

@@ -7,6 +7,7 @@ from novel.repositary.UU import LinkRepositary as UULinkRepo
 from novel.items import ArticleItem
 from opencc import OpenCC
 
+
 class UU(scrapy.Spider):
     """
     UU 看書
@@ -19,16 +20,16 @@ class UU(scrapy.Spider):
     def parse(self, response):
         # 解析書籍目錄
         raw_list = self.getLinkList(response)
-        
+
         # 剔除重複、儲存 Link
         new_articles = UULinkRepo.getNewLinks(raw_list)
-        
+
         # 每一篇文章，再發起一個 request 去爬
         for article in new_articles:
             yield response.follow(
                 article["link"],
                 callback=self.getOneArticle,
-                meta = {
+                meta={
                     "site_name": self.name,
                     "novel_name": raw_list["novel_name"],
                     "author": raw_list["author"],
@@ -50,7 +51,7 @@ class UU(scrapy.Spider):
         chapterList = response.css("ul#chapterList > li > a")
         links = chapterList.css("a::attr(href)").extract()
         titles = chapterList.css("a::text").extract()
-        
+
         # 轉繁體
         cc = OpenCC('s2t')
         try:
@@ -62,7 +63,7 @@ class UU(scrapy.Spider):
                 author = author2
         except:
             pass
-        
+
         for title in titles:
             title2 = cc.convert(title)
             if title2:
@@ -71,12 +72,12 @@ class UU(scrapy.Spider):
                 titles2.append(title)
 
         return {
-            "site":site,
-            "novel_id":novel_id,
+            "site": site,
+            "novel_id": novel_id,
             "author": author,
             "novel_name": novel_name,
-            "links":links,
-            "titles":titles2,
+            "links": links,
+            "titles": titles2,
         }
 
     def getOneArticle(cls, response):
@@ -91,7 +92,7 @@ class UU(scrapy.Spider):
         tidRegex = re.compile(r'tid=(\d+)&')
         matchT = tidRegex.search(article_url)
         novel_id = str(int(matchT.group(1)))
-        sidRegex =  re.compile(r'sid=(\d+)')
+        sidRegex = re.compile(r'sid=(\d+)')
         matchS = sidRegex.search(article_url)
         article_id = str(int(matchS.group(1)))
         article["novel_id"] = novel_id
@@ -115,7 +116,7 @@ class UU(scrapy.Spider):
                     if htmlNode is not None and htmlNode.getparent() is not None:
                         htmlNode.getparent().remove(htmlNode)
         article["content"] = content.extract_first()
-        
+
         # 時間預設值之處理
         tz = pytz.timezone('Asia/Taipei')
         article["created_at"] = datetime.now(tz)
@@ -134,5 +135,5 @@ class UU(scrapy.Spider):
                 article["content"] = content2
         except:
             pass
-        
+
         yield article

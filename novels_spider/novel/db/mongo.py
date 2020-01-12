@@ -1,7 +1,7 @@
 from mongoengine import *
 import datetime
 
-# 連結
+
 class Links(Document):
     """
     儲存連結 - 進度記錄用，防止收錄重複連結內容

@@ -83,22 +83,6 @@ WSGI_APPLICATION = 'novels_web.wsgi.application'
 #     }
 # }
 
-# Mongo 連線資訊
-MONGO_USER="test_user"
-MONGO_PASSWD="test_password"
-MONGO_HOST= "your.mongodb.host"
-MONGO_DBNAME = "novels"
-
-from mongoengine import connect
-conn = connect(
-    alias='default', 
-    db=MONGO_DBNAME, 
-    host = MONGO_HOST,
-    username = MONGO_USER,
-    password = MONGO_PASSWD,
-    port=27017
-)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
