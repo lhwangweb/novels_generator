@@ -83,6 +83,7 @@ def make_lstm_model(raw_text= "", sequence_length=10):
         int_text_relation = dict((ii, it) for ii, it in enumerate(uniq_words))
         no_words = len(raw_text)
         uniq_no_words = len(uniq_words)
+        print("語料共計" + str(no_words) + "字，不重複字 " + str(uniq_no_words) + " 個")
 
         dataX = []
         dataY = []
@@ -134,6 +135,8 @@ def keras_train(lstm_model_data=None, epochs = 1, batch_size= 32, verbose=1, wei
         lstm_model.fit(X, y, epochs=epochs, batch_size=batch_size, callbacks=callbacks_list)
     else:
         print("Model Empty")
+
+    return True
 
 def keras_generate(lstm_model_data = None, raw_text="", sequence_length = 10, article_length = 1000, weight_filename = './weights-records.hdf5'):
     """
@@ -196,11 +199,11 @@ def main(num_articles = 5, epochs = 1, sequence_length = 10, batch_size = 32):
         fp = open("./raw_text.txt", "w")
         fp.write(raw_text)
         fp.close()
-        print("raw_text.txt 產生完畢，共計 " + str(len(raw_text)) + " 字")
+        # print("raw_text.txt 產生完畢，共計 " + str(len(raw_text)) + " 字")
         # 模型建立
         lstm_model_data = make_lstm_model(raw_text= raw_text, sequence_length=sequence_length)
         # 訓練
-        keras_train(lstm_model_data=lstm_model_data, epochs=epochs,  batch_size= 32, verbose=1, weight_filename = './weights-records.hdf5')
+        keras_train(lstm_model_data=lstm_model_data, epochs=epochs,  batch_size=batch_size, verbose=1, weight_filename = './weights-records.hdf5')
         # 預測文章
         result_article = keras_generate(lstm_model_data=lstm_model_data, raw_text = raw_text, sequence_length=sequence_length, article_length=article_length_avg, weight_filename = './weights-records.hdf5')
         # 儲存
@@ -220,23 +223,21 @@ def main(num_articles = 5, epochs = 1, sequence_length = 10, batch_size = 32):
         else:
             print("此次無新文章")
 
+    return True
+
 if __name__ == '__main__':
     try:
-        if len(sys.argv) == 3:
-            # 用於預測新字的句子長度
-            sequence_length = 32
-            # 每批訓練的樣本數 batch_size大小選擇: https://www.zhihu.com/question/32673260
-            batch_size = 8
-            # 要用幾篇文章訓練
-            num_articles = int(sys.argv[1])
-            # 訓練次數
-            epochs = int(sys.argv[2])
-
-            main(num_articles=num_articles, epochs=epochs, sequence_length=sequence_length, batch_size=batch_size)
-        else:
-            print("Usage: python3 main.py N M")
-            print("       N: 文章篇數")
-            print("       M: 訓練次數")
+        # 用於預測新字的句子長度
+        sequence_length = 64
+        # 每批訓練的樣本數 batch_size大小選擇: https://www.zhihu.com/question/32673260
+        batch_size = 1
+        # 要用幾篇文章訓練
+        num_articles = 100
+        # 訓練次數
+        epochs = 1000
+        # 執行主程式
+        main(num_articles=num_articles, epochs=epochs, sequence_length=sequence_length, batch_size=batch_size)
+    
     except Exception as e:
         print("發生錯誤")
         print(str(e))
