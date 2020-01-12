@@ -1,6 +1,7 @@
 
 novels_lstm
   Copyright (c) Original Authors: Jason Brownlee, 山陰少年
+-------------------------------------------------------
 
 [1] Text Generation With LSTM Recurrent Neural Networks in Python with Keras
 Jason Brownlee
@@ -10,15 +11,15 @@ https://www.cnblogs.com/jclian91/p/9863848.html
 山陰少年
 https://www.cnblogs.com/jclian91/p/9863848.html
 
-本人參考兩位作者的步驟，進行 LSTM 練習並整理為本程式碼之中的 novels_lstm， 在此保留原作者完整資訊。
+本人參考兩位作者的步驟，完成 LSTM 練習，並整理為本程式碼之中的 novels_lstm， 在此保留原作者完整資訊，且聲明在這部分本人無任何權利，所有權利應歸屬兩位原作者。
 
 The code in novels_lstm are my practice which reference are Jason Brownlee's and 山陰少年's blog article.
 Therefore, preserve all information for authors.
 
 
 
-novels_spider, novels_web 
-  unlicense
+novels_spider, novels_web BOTH UNLICENSE
+-------------------------------------------------------
 
 This is free and unencumbered software released into the public domain.
 
