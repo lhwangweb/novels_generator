@@ -1,18 +1,19 @@
-# 說明
+## 說明
+
  - 小說產生器，輸入某些小說並作訓練後，輸出類似風格的新章節，流程如下：
     - 爬蟲(Scrapy)會先把已有章節爬回來，存到 Mongo
     - 決定想拿哪些文章來做訓練基礎，例如前 N 篇
     - 以 LSTM 模型讀入 N 篇文章並反覆訓練 M 次，完成後依訓練結果預測後續文字 P 個
     - P 個文字內包含標點與斷行，故即為新章節
 
-# 技術
+## 技術
+
    - Python 3
    - 爬蟲： Scrapy 1.5.x + Mongo 儲存
    - 文章產生： TensorFlow 2.1.0 (CPU Only), Keras 跑 LSTM 進行訓練＆預測文章
    - 瀏覽結果： Django 2.1.x + Mongo 做個簡單的小 web，瀏覽產生的文章
 
-# 成果範例
-## 成果文章
+## 成果範例文章
 
 1. 小說『[巫師生活指南](https://sj.uukanshu.com/book.aspx?id=83004)』前 5 篇，訓練 59 次， batch_size=32, sequence_length=20 (耗費約 1.5 hr)
 
@@ -39,7 +40,8 @@
    
    注意，上面的斷行不是我加的，是訓練後的機器按照原文風格加的
 
-# 安裝步驟
+## 安裝步驟
+
 1. 環境安裝
    - 使用 Docker 建構環境，提供建立指令參考：
 
@@ -72,9 +74,9 @@
    MONGO_DBNAME = "novels"
    ```
 
-# 使用步驟
+## 使用步驟
 
-## 爬取文章
+### 爬取文章
 
 1. 進入目錄並執行爬蟲指令
    ```bash
@@ -88,7 +90,7 @@
 
 2. 到 Mongo 查看 raw_articles 這個 collection ，看文章是否成功收錄
 
-## 訓練＆產生新文章
+### 訓練＆產生新文章
 
 1. 進入目錄並執行 LSTM 相關指令
    ```bash
@@ -127,8 +129,7 @@
    def make_lstm_model(raw_text= "", sequence_length=10):
    ```
 
-   
-## 瀏覽產生的文章
+### 瀏覽產生的文章
 
 方法一： 到 Mongo 查看 articles 這個 collection
 
@@ -143,36 +144,36 @@
 
    2. 啟動後，即可以瀏覽器連接 http://localhost:8888 ，查看生成的文章
 
-# 參考資料
+## 參考資料
 
-## 爬蟲篇
+### 爬蟲篇
 1. [Scrapy-Splash 說明文件](https://splash-cn-doc.readthedocs.io/zh_CN/latest/scrapy-splash-toturial.html)
 
 2. [[Day 22] 實戰：Scrpay 爬取動態網頁](https://ithelp.ithome.com.tw/articles/10208357)
 3. [爬虫之scrapy-splash——scrapy+js渲染容器](https://www.jianshu.com/p/2516138e9e75)
 
-## 機器學習篇
+### 機器學習篇
 1. [Text Generation With LSTM Recurrent Neural Networks in Python with Keras](https://machinelearningmastery.com/text-generation-lstm-recurrent-neural-networks-python-keras/)
 
 2. [RNN入門（三）利用LSTM生成旅遊點評](https://www.cnblogs.com/jclian91/p/9863848.html)
 3. [讓 AI 寫點金庸：如何用 TensorFlow 2.0 及 TensorFlow.js 寫天龍八部](https://leemeng.tw/how-to-generate-interesting-text-with-tensorflow2-and-tensorflow-js.html)
 
-## Django
+### Django
 1. [Django 官網的 Get Start (2.1)](https://docs.djangoproject.com/zh-hans/2.1/intro/)
 2. [MongoDB with Python & MongoEngine | MongoDB & Python Pt. 1](https://pythonise.com/series/mongodb-and-python/mongodb-python-mongoengine-pt1)
 3. [MongoEngine 說明文件](http://docs.mongoengine.org/apireference.html)
 
 
-# LICNESE ＆ COPYRIGHT
-## novels_spider
+## LICNESE ＆ COPYRIGHT
+### novels_spider
 
 爬蟲部分採 UNLICENSE，請參考 LICENSE 檔案
 
-## novels_web
+### novels_web
 
 Web 瀏覽部分採 UNLICENSE，請參考 LICENSE 檔案
 
-## novels_lstm
+### novels_lstm
 
 Copyright (c) Original Authors 所有權利應保留給原作者：Jason Brownlee, 山陰少年
 

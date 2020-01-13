@@ -1,6 +1,6 @@
 from mongoengine import *
 import datetime
-
+import pytz
 
 class Links(Document):
     """
@@ -11,7 +11,7 @@ class Links(Document):
     novel_id = StringField(required=True, default='')
     title = StringField(required=True, default='')
     link = StringField(required=True, default='', unique=True)
-    created_at = DateTimeField(required=True, default=datetime.datetime.utcnow())
+    created_at = DateTimeField(required=True, default=datetime.datetime.now(pytz.timezone('Asia/Taipei')))
 
 
 class Articles(Document):
@@ -27,5 +27,5 @@ class Articles(Document):
     title = StringField(required=True, default='')
     content = StringField(required=True, default='')
     link = StringField(required=True, default='', unique=True)
-    created_at = DateTimeField(required=True, default=datetime.datetime.utcnow())
+    created_at = DateTimeField(required=True, default=datetime.datetime.now(pytz.timezone('Asia/Taipei')))
     updated_at = DateTimeField()

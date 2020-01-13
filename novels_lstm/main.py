@@ -4,6 +4,7 @@ import sys
 import os
 import traceback
 from datetime import datetime
+import pytz
 
 import numpy
 from keras.models import Sequential
@@ -194,7 +195,7 @@ def main(num_articles=5, epochs=1, sequence_length=10, batch_size=32):
         Mongo 讀出 num_articles 篇文章作為訓練材料，訓練 epochs 次以後，預測出新的一篇文章
         參考文件： jclian91  RNN入門（三）利用LSTM生成旅遊點評 https://www.cnblogs.com/jclian91/p/9863848.html
     """
-    result = ""
+    result_article = ""
 
     # 讀入預備訓練的文章
     raw_text = read_article(num_articles)
@@ -206,15 +207,19 @@ def main(num_articles=5, epochs=1, sequence_length=10, batch_size=32):
         fp = open("./raw_text.txt", "w")
         fp.write(raw_text)
         fp.close()
-        # print("raw_text.txt 產生完畢，共計 " + str(len(raw_text)) + " 字")
+
         # 模型建立
         lstm_model_data = make_lstm_model(raw_text=raw_text, sequence_length=sequence_length)
+
         # 訓練
         keras_train(lstm_model_data=lstm_model_data, epochs=epochs, batch_size=batch_size, verbose=1, weight_filename='./weights-records.hdf5')
+        
         # 預測文章
         result_article = keras_generate(lstm_model_data=lstm_model_data, raw_text=raw_text, sequence_length=sequence_length, article_length=article_length_avg, weight_filename='./weights-records.hdf5')
+        
         # 儲存
         if result_article:
+            
             save_article({
                 "title": result_article[0:10],
                 "content": result_article,
@@ -224,7 +229,7 @@ def main(num_articles=5, epochs=1, sequence_length=10, batch_size=32):
                 "article_length": article_length_avg,
                 "first_input": raw_text[(0-sequence_length):],
                 # "raw_text":raw_text,
-                "created_at": datetime.utcnow()
+                "created_at": datetime.now(pytz.timezone('Asia/Taipei'))
             })
             print("新文章儲存完成")
         else:

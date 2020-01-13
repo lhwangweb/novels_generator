@@ -3,11 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 from mongoengine import *
 import datetime
+import pytz
 
 # Mongo 連線資訊
 MONGO_USER = "test_user"
 MONGO_PASSWD = "test_password"
-MONGO_HOST = "your.mongodb.hosr"
+MONGO_HOST = "your.mongodb.host"
 MONGO_DBNAME = "novels"
 
 conn = connect(
@@ -32,7 +33,7 @@ class ArticleMongoModel(Document):
     article_length = StringField(required=False, default='')
     first_input = StringField(required=False, default='')
     raw_text = StringField(required=False, default='')
-    created_at = DateTimeField(required=True, default=datetime.datetime.utcnow())
+    created_at = DateTimeField(required=True, default=datetime.datetime.now(pytz.timezone('Asia/Taipei')))
     # updated_at = DateTimeField()
 
     def link(self):
