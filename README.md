@@ -167,11 +167,11 @@
 ## LICNESE ＆ COPYRIGHT
 ### novels_spider
 
-爬蟲部分採 UNLICENSE，請參考 LICENSE 檔案
+爬蟲採用 Scrapy 框架建立，故遵循 Scrapy 之 LICENSE BSD License
 
 ### novels_web
 
-Web 瀏覽部分採 UNLICENSE，請參考 LICENSE 檔案
+Web 瀏覽部分採用 Django ，故遵循 Django 的 3-clause BSD
 
 ### novels_lstm
 
