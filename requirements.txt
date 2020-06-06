@@ -7,7 +7,7 @@ config==0.4.0
 constantly==15.1.0
 cryptography==2.4.2
 cssselect==1.0.3
-Django==2.1.5
+Django==2.2.13
 django-mongodb-engine==0.6.0
 djangotoolbox==1.8.0
 hyperlink==18.0.0
