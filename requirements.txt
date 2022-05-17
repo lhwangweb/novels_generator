@@ -15,7 +15,7 @@ idna==2.8
 incremental==17.5.0
 lxml==4.6.5
 mongoengine==0.16.3
-nltk==3.4.5
+nltk==3.6.6
 numpy==1.21.0
 opencc-python-reimplemented==0.1.4
 parsel==1.5.1
